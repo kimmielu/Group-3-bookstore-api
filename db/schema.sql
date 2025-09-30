@@ -111,3 +111,17 @@ CREATE TABLE order_items (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- PAYMENTS table
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_type VARCHAR(50) NOT NULL,
+    transaction_reference VARCHAR(255),
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_payments_order FOREIGN KEY (order_id)
+        REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
