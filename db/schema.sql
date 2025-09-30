@@ -95,9 +95,7 @@ CREATE TABLE orders (
         ON UPDATE CASCADE
 );
 
--- ORDER_ITEMS table
-CREATE TABLE order_items (
-    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+-- ORDER_ITEMS table    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
@@ -122,6 +120,24 @@ CREATE TABLE payments (
     payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_payments_order FOREIGN KEY (order_id)
         REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- REVIEWS table
+CREATE TABLE reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    isbn VARCHAR(13) NOT NULL,
+    rating TINYINT CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_reviews_customer FOREIGN KEY (customer_id)
+        REFERENCES customers(customer_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_reviews_book FOREIGN KEY (isbn)
+        REFERENCES books(isbn)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
