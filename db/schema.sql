@@ -36,3 +36,19 @@ CREATE TABLE authors (
     name VARCHAR(200) NOT NULL,
     bio TEXT
 );
+
+-- BOOKS table
+CREATE TABLE books (
+    isbn VARCHAR(13) PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    publisher_id INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    subject_area VARCHAR(200),
+    year_published YEAR,
+    pages INT,
+    language VARCHAR(50),
+    CONSTRAINT fk_books_publisher FOREIGN KEY (publisher_id)
+        REFERENCES publishers(publisher_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
