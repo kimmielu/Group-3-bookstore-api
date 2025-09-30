@@ -52,3 +52,19 @@ CREATE TABLE books (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- BOOK_AUTHORS table (many-to-many between books and authors)
+CREATE TABLE book_authors (
+    book_isbn VARCHAR(13) NOT NULL,
+    author_id INT NOT NULL,
+    PRIMARY KEY (book_isbn, author_id),
+    CONSTRAINT fk_ba_book FOREIGN KEY (book_isbn)
+        REFERENCES books(isbn)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_ba_author FOREIGN KEY (author_id)
+        REFERENCES authors(author_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
