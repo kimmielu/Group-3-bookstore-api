@@ -79,3 +79,18 @@ CREATE TABLE inventory (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- ORDERS table
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending','paid','shipped','partial','cancelled') DEFAULT 'pending',
+    payment_method VARCHAR(50),
+    shipping_address TEXT,
+    is_partial_allowed BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_orders_customer FOREIGN KEY (customer_id)
+        REFERENCES customers(customer_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
