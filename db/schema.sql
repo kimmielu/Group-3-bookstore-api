@@ -94,3 +94,20 @@ CREATE TABLE orders (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- ORDER_ITEMS table
+CREATE TABLE order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    isbn VARCHAR(13) NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    unit_price DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_orderitems_order FOREIGN KEY (order_id)
+        REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_orderitems_book FOREIGN KEY (isbn)
+        REFERENCES books(isbn)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
