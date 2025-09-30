@@ -29,3 +29,10 @@ CREATE TABLE publishers (
     address TEXT,
     contact_phone VARCHAR(30)
 );
+
+-- AUTHORS table
+CREATE TABLE authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    bio TEXT
+);
