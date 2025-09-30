@@ -21,3 +21,11 @@ CREATE TABLE customers (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+-- PUBLISHERS table
+CREATE TABLE publishers (
+    publisher_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    address TEXT,
+    contact_phone VARCHAR(30)
+);
