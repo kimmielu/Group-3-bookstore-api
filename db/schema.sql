@@ -68,3 +68,14 @@ CREATE TABLE book_authors (
         ON UPDATE CASCADE
 );
 
+-- INVENTORY table
+CREATE TABLE inventory (
+    isbn VARCHAR(13) PRIMARY KEY,
+    quantity_on_hand INT NOT NULL DEFAULT 0,
+    quantity_on_order INT NOT NULL DEFAULT 0,
+    reorder_level INT NOT NULL DEFAULT 5,
+    CONSTRAINT fk_inventory_book FOREIGN KEY (isbn)
+        REFERENCES books(isbn)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
