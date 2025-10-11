@@ -97,6 +97,7 @@ CREATE TABLE orders (
 );
 
 -- ORDER_ITEMS table    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE order_items (
     order_id INT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
