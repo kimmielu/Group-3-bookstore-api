@@ -146,4 +146,8 @@ CREATE TABLE IF NOT EXISTS reviews (
         REFERENCES books(isbn)
         ON DELETE CASCADE
         ON UPDATE CASCADE
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+=======
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+>>>>>>> 0c299a25240755d2d1f7074f9fcd5efa42e8f965
