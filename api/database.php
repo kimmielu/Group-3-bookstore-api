@@ -3,7 +3,7 @@ class Database {
     private $host = "localhost";
     private $db_name = "bookstore_test";
     private $username = "root";
-    private $password = "1234"; // your actual MariaDB root password
+    private $password = "1234"; // your actual HeidiSQL root password
     public $conn;
 
     public function getConnection() {

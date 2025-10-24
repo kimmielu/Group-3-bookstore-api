@@ -1,45 +1,32 @@
--- USERS table
-CREATE TABLE users (
+USE bookstore_test;
+
+-- USER table
+CREATE TABLE IF NOT EXISTS User (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('employee', 'customer', 'admin') NOT NULL DEFAULT 'customer',
     two_factor_code VARCHAR(10) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- CUSTOMERS table
-CREATE TABLE customers (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    name VARCHAR(200) NOT NULL,
-    phone VARCHAR(30),
-    address TEXT,
-    reading_preferences VARCHAR(255),
-    profession VARCHAR(100),
-    CONSTRAINT fk_customer_user FOREIGN KEY (user_id)
-        REFERENCES users(user_id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- PUBLISHERS table
-CREATE TABLE publishers (
+CREATE TABLE IF NOT EXISTS publishers (
     publisher_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     address TEXT,
     contact_phone VARCHAR(30)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- AUTHORS table
-CREATE TABLE authors (
+CREATE TABLE IF NOT EXISTS authors (
     author_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     bio TEXT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- BOOKS table
-CREATE TABLE books (
+CREATE TABLE IF NOT EXISTS books (
     isbn VARCHAR(13) PRIMARY KEY,
     title VARCHAR(500) NOT NULL,
     publisher_id INT NOT NULL,
@@ -52,10 +39,10 @@ CREATE TABLE books (
         REFERENCES publishers(publisher_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- BOOK_AUTHORS table (many-to-many between books and authors)
-CREATE TABLE book_authors (
+CREATE TABLE IF NOT EXISTS book_authors (
     book_isbn VARCHAR(13) NOT NULL,
     author_id INT NOT NULL,
     PRIMARY KEY (book_isbn, author_id),
@@ -67,10 +54,10 @@ CREATE TABLE book_authors (
         REFERENCES authors(author_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- INVENTORY table
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
     isbn VARCHAR(13) PRIMARY KEY,
     quantity_on_hand INT NOT NULL DEFAULT 0,
     quantity_on_order INT NOT NULL DEFAULT 0,
@@ -79,10 +66,25 @@ CREATE TABLE inventory (
         REFERENCES books(isbn)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- CUSTOMERS table
+CREATE TABLE IF NOT EXISTS customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    phone VARCHAR(30),
+    address TEXT,
+    reading_preferences VARCHAR(255),
+    profession VARCHAR(100),
+    CONSTRAINT fk_customer_user FOREIGN KEY (user_id)
+        REFERENCES User(user_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ORDERS table
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -94,10 +96,11 @@ CREATE TABLE orders (
         REFERENCES customers(customer_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ORDER_ITEMS table    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
-CREATE TABLE order_items (
+-- ORDER_ITEMS table
+CREATE TABLE IF NOT EXISTS order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
@@ -110,10 +113,10 @@ CREATE TABLE order_items (
         REFERENCES books(isbn)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- PAYMENTS table
-CREATE TABLE payments (
+CREATE TABLE IF NOT EXISTS payments (
     payment_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
@@ -124,16 +127,17 @@ CREATE TABLE payments (
         REFERENCES orders(order_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- REVIEWS table
-CREATE TABLE reviews (
+CREATE TABLE IF NOT EXISTS reviews (
     review_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
-    rating TINYINT CHECK (rating BETWEEN 1 AND 5),
+    rating TINYINT,
     comment TEXT,
     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT chk_rating CHECK (rating BETWEEN 1 AND 5),
     CONSTRAINT fk_reviews_customer FOREIGN KEY (customer_id)
         REFERENCES customers(customer_id)
         ON DELETE CASCADE
@@ -142,4 +146,4 @@ CREATE TABLE reviews (
         REFERENCES books(isbn)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

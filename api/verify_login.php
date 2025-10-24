@@ -2,8 +2,8 @@
 session_start();
 
 // Include database and user files (they're in the same folder)
-include_once __DIR__ . '/database.php';
-include_once __DIR__ . '/User.php';
+include_once "database.php";
+include_once "User.php";
 
 // Create database connection
 $database = new Database();

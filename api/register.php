@@ -5,13 +5,12 @@ include_once "database.php";
 // include the User class
 include_once "User.php";
 
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+
 // if form submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // get database connection
-    $database = new Database();
-    $db = $database->getConnection();
-
     // create a new User object
     $user = new User($db);
 
