@@ -14,11 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $book->publisher_id = $_POST['publisher_id'] ?? '';
     $book->price = $_POST['price'] ?? '';
     $book->subject_area = $_POST['subject_area'] ?? '';
-    $book->year_published = $_POST['year_published'] ?? ''; // optional if your form has it
     $book->language = $_POST['language'] ?? '';
     $book->pages = $_POST['pages'] ?? '';
-    $book->author = $_POST['author'] ?? '';
-    $book->category = $_POST['category'] ?? '';
+
 print '<pre>';
 print_r($book);
 print '</pre>';
@@ -47,19 +45,12 @@ if ($book->create()) {
         <label>Title:</label>
         <input type="text" name="title" class="form-control" required>
       </div>
-      <div class="mb-3">
-        <label>Author:</label>
-        <input type="text" name="author" class="form-control" required>
-      </div>
+      
       <div class="mb-3">
         <label>Price:</label>
         <input type="number" name="price" step="0.01" class="form-control" required>
       </div>
-      <div class="mb-3">
-        <label>Category:</label>
-        <input type="text" name="category" class="form-control" required>
-      </div>
-        <div class="mb-3">
+              <div class="mb-3">
           <label>ISBN:</label>
           <input type="text" name="isbn" class="form-control" required>
         </div>

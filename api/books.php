@@ -11,8 +11,6 @@ class Book {
     public $pages;
     public $language;
     public $year_published;
-    public $author;
-    public $category;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -20,19 +18,16 @@ class Book {
 
     // Create Book
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " (isbn, title, publisher_id, price, subject_area, author, category, pages, language, year_published)
-                  VALUES (:isbn, :title, :publisher_id, :price, :subject_area, :author, :category, :pages, :language, :year_published)";
+        $query = "INSERT INTO " . $this->table_name . " (isbn, title, publisher_id, price, subject_area, pages, language)
+                  VALUES (:isbn, :title, :publisher_id, :price, :subject_area, :pages, :language)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':isbn', $this->isbn);
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':publisher_id', $this->publisher_id);
         $stmt->bindParam(':price', $this->price);
         $stmt->bindParam(':subject_area', $this->subject_area);
-        $stmt->bindParam(':author', $this->author);
-        $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':pages', $this->pages);
         $stmt->bindParam(':language', $this->language);
-        $stmt->bindParam(':year_published', $this->year_published);
 
         if ($stmt->execute()) {
             return true;
