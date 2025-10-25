@@ -1,13 +1,13 @@
 <?php
 class Database {
-    private $host = "localhost";
+    private $host = "127.0.0.1";
     private $db_name = "bookstore_test";
     private $username = "root";
-    private $password = "1234"; // your actual HeidiSQL root password
+    private $password = "1234"; 
     public $conn;
 
     public function getConnection() {
-        $this->conn = null;
+        
         try {
             $this->conn = new PDO(
                 "mysql:host={$this->host};dbname={$this->db_name}",

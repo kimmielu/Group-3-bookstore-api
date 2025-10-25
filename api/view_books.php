@@ -27,7 +27,7 @@ $stmt = $book->readAll();
           <th>Title</th>
           <th>Author</th>
           <th>Price</th>
-          <th>Category</th>
+          <th>Subject Area</th>
         </tr>
       </thead>
       <tbody>

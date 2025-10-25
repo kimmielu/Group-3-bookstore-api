@@ -1,9 +1,9 @@
 <?php
 class User {
     private $conn;
-    private $table_name = "users";
+    private $table_name = "User";
 
-    // Properties (same as users table)
+    // Properties (same as User table)
     public $id;
     public $email;
     public $password_hash;
